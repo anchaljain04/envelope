@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<title>Envelope</title>
+	<link rel="stylesheet" type="text/css" href="./envelope.css">
+</head>
+<body>
+  <div class="envelope" id="envelope">
+  	<div class="cover top" id="envelopeTop"></div>
+  	<div class="cover bottom right" id="bottom-right"></div>
+  	<div class="cover left" id="left"></div>
+  	<div class="letter" id="contact">
+  		<h1>CONTACT ME</h1>
+  		<br/>
+  		<form action="" id="contactForm">
+  			
+  			<p>My Name is :)<textarea rows="1" cols="49" name="contactName" id="contactName" form="contact" placeholder="---------------------------------------."></textarea>
+  				<br/>
+  				
+  				My Phone Number is:)<textarea rows="1" cols="40" name="contactPhoneNumber" id="contactPhoneNumber" form="contact" placeholder="---------------------------------------."></textarea>
+  				<br/>
+  				My E-MAIL is :) <textarea rows="1" cols="47" name="contactEmail" id="contactEmail" form="contact" placeholder="---------------------------------------." ></textarea>
+  				<br/>
+  				Any Message :)
+  				<textarea rows="7" cols="47" name="contactMessage" id="contactMessage" form="useform" placeholder="---------------------------------------."></textarea>
+  			</p>
+  			<button type="button">SUBMIT</button>
+  		
+  			<!-- <h1 class="button" id="submitContact">SUBMIT</h1> -->
+  		</form>
+  	</div>
+  </div>
+  <script type="text/javascript">
+var envelope = document.getElementById('envelope');
+var envelopeTop= document.getElementById('envelopeTop');
+var letter= document.getElementById('contact');
+var left= document.getElementById('left');
+var bottomRight= document.getElementById('bottom-right');
+
+
+envelopeTop.classList.add("close");
+envelope.addEventListener('mouseover',openEnvelopeOnHover);
+envelope.addEventListener('mouseout',closeEnvelopeOnHover);
+
+function openEnvelopeOnHover(){
+	envelopeTop.classList.remove("close");
+	envelopeTop.classList.add("open");
+	pullOutPartial();
+}
+function pullOutPartial(){
+	letter.classList.remove("in");
+	letter.classList.add("out-partial");
+
+}
+function closeEnvelopeOnHover(){
+	if(flag===1){
+		putIn();
+		envelopeTop.classList.remove("open");
+		envelopeTop.classList.add("close");
+	}
+	else{
+		envelope.removeEventListener('mouseout',closeEnvelopeOnHover);
+
+	}
+}
+function putIn(){
+	letter.classList.remove("out-partial");
+	letter.classList.add("in");
+}
+envelope.addEventListener("click", openEnvelope);
+
+function openEnvelope() {
+	flag=0;
+	closeEnvelopeOnHover();
+	letter.classList.add("pull");
+	letter.addEventListener("animationend",function(){
+		left.style.zIndex=0;
+		bottomRight.style.zIndex=0;
+		envelopeTop.style.zIndex=0;
+		letter.style.zIndex=20;
+		letter.classList.add("put");
+		letter.addEventListener("animationend",function(){
+			letter.style.transition='none';
+			letter.classList.add("final");
+			letter.classList.remove("put");
+			letter.classList.remove("pull");
+			envelope.style.cursor="default";
+
+
+		});
+	});
+	envelope.removeEventListener('click',openEnvelope);
+}
+
+</script>
+
+</body>
+</html>
